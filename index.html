@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Mark Sheet</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .output {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Interactive Mark Sheet</h2>
+        <label for="studentName">Student Name:</label>
+        <input type="text" id="studentName" placeholder="Enter student name"><br><br>
+
+        <label for="fatherName">Father's Name:</label>
+        <input type="text" id="fatherName" placeholder="Enter father's name"><br><br>
+
+        <label for="totalMarks">Total Marks:</label>
+        <input type="number" id="totalMarks" placeholder="Enter total marks"><br><br>
+
+        <label for="obtainedMarks">Obtained Marks:</label>
+        <input type="number" id="obtainedMarks" placeholder="Enter obtained marks"><br><br>
+
+        <button onclick="generateMarkSheet()">Generate Mark Sheet</button>
+
+        <div id="output" class="output" style="display: none;"></div>
+    </div>
+
+    <script>
+        function generateMarkSheet() {
+            // Get input values
+            const studentName = document.getElementById("studentName").value;
+            const fatherName = document.getElementById("fatherName").value;
+            const totalMarks = parseFloat(document.getElementById("totalMarks").value);
+            const obtainedMarks = parseFloat(document.getElementById("obtainedMarks").value);
+
+            // Validate inputs
+            if (!studentName || !fatherName || isNaN(totalMarks) || isNaN(obtainedMarks)) {
+                alert("Please fill in all fields correctly.");
+                return;
+            }
+
+            // Calculate percentage
+            const percentage = (obtainedMarks / totalMarks) * 100;
+
+            // Determine grade and remarks
+            let grade = "";
+            let remarks = "";
+
+            if (percentage >= 80) {
+                grade = "A+";
+                remarks = "Excellent";
+            } else if (percentage >= 70) {
+                grade = "A";
+                remarks = "Very Good";
+            } else if (percentage >= 60) {
+                grade = "B";
+                remarks = "Good";
+            } else if (percentage >= 50) {
+                grade = "C";
+                remarks = "Satisfactory";
+            } else {
+                grade = "F";
+                remarks = "Fail";
+            }
+
+            // Display results
+            const outputDiv = document.getElementById("output");
+            outputDiv.style.display = "block";
+            outputDiv.innerHTML = `
+                <h3>Mark Sheet</h3>
+                <p><strong>Student Name:</strong> ${studentName}</p>
+                <p><strong>Father's Name:</strong> ${fatherName}</p>
+                <p><strong>Total Marks:</strong> ${totalMarks}</p>
+                <p><strong>Obtained Marks:</strong> ${obtainedMarks}</p>
+                <p><strong>Percentage:</strong> ${percentage.toFixed(2)}%</p>
+                <p><strong>Grade:</strong> ${grade}</p>
+                <p><strong>Remarks:</strong> ${remarks}</p>
+            `;
+        }
+    </script>
+</body>
+</html>
